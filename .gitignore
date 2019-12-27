@@ -1,5 +1,4 @@
 /.idea/
-
 # Project exclude paths
 /.gradle/
 /application/build/classes/
@@ -17,3 +16,4 @@
 /entity/build/classes/java/main/
 /entity/build/libs/
 /entity/build/tmp/
+/application/build/
