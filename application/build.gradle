@@ -1,0 +1,48 @@
+dependencies {
+    implementation project(":entity")
+
+    implementation("org.springframework:spring-context")
+    implementation("mysql:mysql-connector-java:8.0.15")
+    implementation("org.springframework.boot:spring-boot-starter-tomcat:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    implementation("io.springfox:springfox-swagger2:2.6.1")
+    implementation("io.springfox:springfox-swagger-ui:2.6.1")
+    implementation("org.mapstruct:mapstruct:${mapstructVersion}")
+    implementation("org.mapstruct:mapstruct-jdk8:${mapstructVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-jooq:${springBootVersion}")
+
+
+    runtime("com.h2database:h2:${h2Version}")
+    jooqRuntime project(":entity")
+    jooqRuntime("org.jooq:jooq-meta-extensions:${jooqVersion}")
+
+    testCompile("junit:junit:${junitVersion}")
+    testCompile("org.jmockit:jmockit:${jmockitVersion}")
+
+    annotationProcessor("org.mapstruct:mapstruct-processor:${mapstructVersion}")
+}
+
+
+jooq {
+    version = '3.12.3'
+    edition = 'OSS'
+    sample(sourceSets.main) {
+        generator {
+            database {
+                name = 'org.jooq.meta.extensions.jpa.JPADatabase'
+                properties {
+                    property {
+                        key = "packages"
+                        value = "com.example.demo.entity"
+                    }
+                }
+            }
+            generate {
+            }
+            target {
+                packageName = 'com.example.demo.jooq'
+                directory = 'build/generated/sources/annotationProcessor/java/main'
+            }
+        }
+    }
+}

@@ -1,0 +1,4 @@
+rootProject.name = 'gradle-jpa-demo'
+
+include 'application'
+include 'entity'
