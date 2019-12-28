@@ -17,7 +17,7 @@ public final   class SampleGeneratorStrategy extends DefaultGeneratorStrategy {
 
     private String getJavaClassName0(Definition definition, Mode mode) {
         StringBuilder result = new StringBuilder();
-        result.append(StringUtils.toCamelCase(definition.getOutputName().replaceAll("^pf_|PF_|_t|_T","")));
+        result.append(StringUtils.toCamelCase(definition.getOutputName().replaceAll("(^pf_|PF_)|(_t|_T)","")));
         if (mode == Mode.RECORD) {
             result.append("Record");
         } else if (mode == Mode.DAO) {
