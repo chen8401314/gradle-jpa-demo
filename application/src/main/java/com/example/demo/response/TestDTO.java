@@ -1,6 +1,7 @@
 package com.example.demo.response;
 
 import com.example.demo.base.BaseDTO;
+import com.example.demo.enumeration.EventStatus;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -24,4 +25,7 @@ public class TestDTO extends BaseDTO {
 
     @ApiModelProperty(value = "生日")
     private LocalDate birthday;
+
+    @ApiModelProperty(value = "状态")
+    private EventStatus eventStatus;
 }

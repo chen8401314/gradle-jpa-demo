@@ -1,7 +1,5 @@
 dependencies {
     implementation project(":entity")
-
-
     implementation("org.springframework:spring-context")
     implementation("mysql:mysql-connector-java:8.0.15")
     implementation("org.springframework.boot:spring-boot-starter-tomcat:${springBootVersion}")
@@ -37,11 +35,25 @@ jooq {
                         value = "com.example.demo.entity"
                     }
                 }
+  /*              customTypes {
+                    customType {
+                        name = "timestamp2ZonedDateTimeConverter"
+                        type = "java.time.ZonedDateTime"
+                        converter = "com.example.demo.base.Timestamp2ZonedDateTimeConverter"
+                    }
+                }
+                forcedTypes {
+                    forcedType {
+                        name = "timestamp2ZonedDateTimeConverter"
+                        types = "DATETIME|TIMESTAMP"
+                    }
+                }*/
             }
             strategy {
                 name = 'com.example.demo.base.SampleGeneratorStrategy'
             }
             generate {
+                javaTimeTypes = true
             }
             target {
                 packageName = 'com.example.demo.jooq'

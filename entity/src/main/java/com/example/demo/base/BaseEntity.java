@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
@@ -25,10 +26,11 @@ public class BaseEntity implements Serializable {
     private String id;
 
    @Column(name = "create_time",columnDefinition = "datetime(6) DEFAULT NULL COMMENT '创建时间'")
+   @Convert(converter = ZonedDateTimeConverter.class)
     private ZonedDateTime createTime;
 
     @PrePersist
     public void prePersist() {
-        createTime = ZonedDateTime.now(ZoneId.of("UTC"));
+        //createTime = ZonedDateTime.now(ZoneId.of("UTC"));
     }
 }

@@ -17,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
 /**
@@ -79,6 +81,13 @@ public class TestController {
         //获取pageable
         Pageable pageable = PageTools.basicPage(page, size, new SortDTO("asc", "create_time"));
         return testService.findTestByPageAndNative(name, pageable);
+
+    }
+
+    @ApiOperation(value = "使用jooq查询")
+    @GetMapping(value = "/findByJooq")
+    public List<TestDTO> testPageable() {
+        return testService.findByJooq();
 
     }
 }
