@@ -25,6 +25,6 @@ public class TestEntity extends BaseEntity {
     @Column(name = "age", columnDefinition = "int(10)  COMMENT '年龄'")
     private Integer age;
 
-/*    @Column(name = "birthday", columnDefinition = "date DEFAULT NULL COMMENT '生日'")
-    private LocalDate birthday;*/
+   @Column(name = "birthday", columnDefinition = "date DEFAULT NULL COMMENT '生日'")
+    private LocalDate birthday;
 }

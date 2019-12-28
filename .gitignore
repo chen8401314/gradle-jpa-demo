@@ -1,19 +1,11 @@
-/.idea/
-# Project exclude paths
-/.gradle/
-/application/build/classes/
-/application/build/classes/java/main/
-/application/build/classes/java/test/
-/application/build/libs/
-/application/build/reports/
-/application/build/resources/
-/application/build/test-results/
-/application/build/tmp/
-/build/
-/build/libs/
-/build/tmp/
-/entity/build/classes/
-/entity/build/classes/java/main/
-/entity/build/libs/
-/entity/build/tmp/
-/application/build/
+#/.idea/
+## Project exclude paths
+#/.gradle/
+#/build/
+#/build/libs/
+#/build/tmp/
+#/entity/build/classes/
+#/entity/build/classes/java/main/
+#/entity/build/libs/
+#/entity/build/tmp/
+#/application/build/

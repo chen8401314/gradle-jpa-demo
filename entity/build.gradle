@@ -5,3 +5,7 @@ bootJar {
 jar {
     enabled = true
 }
+
+dependencies {
+    compile("org.jooq:jooq-codegen:${jooqVersion}")
+}

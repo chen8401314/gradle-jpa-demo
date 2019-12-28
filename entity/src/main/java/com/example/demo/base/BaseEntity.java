@@ -24,11 +24,11 @@ public class BaseEntity implements Serializable {
     @Column(name = "id", columnDefinition = "varchar(32) NOT NULL COMMENT '主键ID'")
     private String id;
 
-/*    @Column(name = "create_time",columnDefinition = "datetime(6) DEFAULT NULL COMMENT '创建时间'")
+   @Column(name = "create_time",columnDefinition = "datetime(6) DEFAULT NULL COMMENT '创建时间'")
     private ZonedDateTime createTime;
 
     @PrePersist
     public void prePersist() {
         createTime = ZonedDateTime.now(ZoneId.of("UTC"));
-    }*/
+    }
 }

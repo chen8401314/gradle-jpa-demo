@@ -1,6 +1,7 @@
 dependencies {
     implementation project(":entity")
 
+
     implementation("org.springframework:spring-context")
     implementation("mysql:mysql-connector-java:8.0.15")
     implementation("org.springframework.boot:spring-boot-starter-tomcat:${springBootVersion}")
@@ -36,6 +37,9 @@ jooq {
                         value = "com.example.demo.entity"
                     }
                 }
+            }
+            strategy {
+                name = 'com.example.demo.base.SampleGeneratorStrategy'
             }
             generate {
             }
