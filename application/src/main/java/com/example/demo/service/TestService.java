@@ -46,18 +46,18 @@ public class TestService {
 
     public BasePageDTO<TestDTO> findTestByPage(Pageable pageable) {
         Page<TestEntity> testEntityPage = testRepo.findAll(pageable);
-        List<TestDTO> testDTOList =  TestMapper.INSTANCE.map(testEntityPage.getContent());
+        List<TestDTO> testDTOList = TestMapper.INSTANCE.map(testEntityPage.getContent());
         return new BasePageDTO<>(new PageImpl<>(testDTOList, pageable, testEntityPage.getTotalElements()));
     }
 
-    public BasePageDTO<TestDTO> findTestByPageAndNative(String name,Pageable pageable) {
-        Page<TestEntity> testEntityPage = testRepo.findAllByNativeSQL(name,pageable);
-        List<TestDTO> testDTOList =  TestMapper.INSTANCE.map(testEntityPage.getContent());
+    public BasePageDTO<TestDTO> findTestByPageAndNative(String name, Pageable pageable) {
+        Page<TestEntity> testEntityPage = testRepo.findAllByNativeSQL(name, pageable);
+        List<TestDTO> testDTOList = TestMapper.INSTANCE.map(testEntityPage.getContent());
         return new BasePageDTO<>(new PageImpl<>(testDTOList, pageable, testEntityPage.getTotalElements()));
     }
 
-    public List<TestDTO> findByJooq(){
-        List<TestDTO> result =   dsl.select().from(t).fetch().into(TestDTO.class);
-        return  result;
+    public List<TestDTO> findByJooq() {
+        List<TestDTO> result = dsl.select().from(t).where().fetch().into(TestDTO.class);
+        return result;
     }
 }

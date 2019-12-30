@@ -7,7 +7,7 @@ import org.jooq.meta.Definition;
 import org.jooq.meta.SchemaDefinition;
 import org.jooq.tools.StringUtils;
 
-public final   class SampleGeneratorStrategy extends DefaultGeneratorStrategy {
+public final class SampleGeneratorStrategy extends DefaultGeneratorStrategy {
 
     @Override
     public String getJavaClassName(Definition definition, Mode mode) {
@@ -17,7 +17,7 @@ public final   class SampleGeneratorStrategy extends DefaultGeneratorStrategy {
 
     private String getJavaClassName0(Definition definition, Mode mode) {
         StringBuilder result = new StringBuilder();
-        result.append(StringUtils.toCamelCase(definition.getOutputName().replaceAll("(^pf_|PF_)|(_t|_T$)","")));
+        result.append(StringUtils.toCamelCase(definition.getOutputName().replaceAll("(^pf_|PF_)|(_t|_T$)", "")));
         if (mode == Mode.RECORD) {
             result.append("Record");
         } else if (mode == Mode.DAO) {
@@ -26,11 +26,12 @@ public final   class SampleGeneratorStrategy extends DefaultGeneratorStrategy {
             result.append("Bo");
         } else if (mode == Mode.INTERFACE) {
             result.insert(0, "I");
-        }else{
+        } else {
             result.append("Table");
         }
         return result.toString();
     }
+
     final String getFixedJavaClassName(Definition definition) {
         if (definition instanceof CatalogDefinition && ((CatalogDefinition) definition).isDefaultCatalog()) {
             return "DefaultCatalog";
