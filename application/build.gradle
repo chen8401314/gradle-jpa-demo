@@ -28,7 +28,7 @@ jooq {
     sample(sourceSets.main) {
         generator {
             database {
-                name = 'org.jooq.meta.extensions.jpa.JPADatabase'
+                name = 'com.example.demo.base.JPADatabase'
                 properties {
                     property {
                         key = "packages"
@@ -59,6 +59,20 @@ jooq {
                 packageName = 'com.example.demo.jooq'
                 directory = 'build/generated/sources/annotationProcessor/java/main'
             }
+        }
+    }
+}
+tasks.generateSampleJooqSchemaSource.with {
+    def out = new ByteArrayOutputStream()
+    javaExecSpec = { JavaExecSpec s ->
+        s.standardOutput = out
+        s.errorOutput = out
+        s.ignoreExitValue = true
+        s.jvmArgs '-Xmx512M'
+    }
+    execResultHandler = { ExecResult r ->
+        if (r.exitValue != 0) {
+            throw new RuntimeException('jOOQ source code generation failed:\n\n' + out.toString())
         }
     }
 }

@@ -28,4 +28,7 @@ public class TestDTO extends BaseDTO {
 
     @ApiModelProperty(value = "状态")
     private EventStatus eventStatus;
+
+    @ApiModelProperty(value = "是否结婚")
+    private String isMarry;
 }

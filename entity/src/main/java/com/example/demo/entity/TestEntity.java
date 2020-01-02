@@ -33,4 +33,7 @@ public class TestEntity extends BaseEntity {
     @Column(name = "event_status", columnDefinition = "varchar(64) DEFAULT 'EVENT_UNPUBLISHED' COMMENT '事件状态(-2事件未发布 -1关闭事件 0办理中 1事件结束)'")
     @Enumerated(EnumType.STRING)
     private EventStatus eventStatus;
+
+    @Column(name = "isMarry", columnDefinition = "varchar(255) NOT NULL DEFAULT '是' COMMENT '是否结婚'")
+    private String isMarry;
 }

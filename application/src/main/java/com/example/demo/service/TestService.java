@@ -33,12 +33,12 @@ public class TestService {
     private TestRepo testRepo;
 
     public TestEntity findTestEntity(String id) {
-        log.info("id={}", id);
+       // log.info("id={}", id);
         return testRepo.getOne(id);
     }
 
     public TestEntity saveTestEntity(TestSaveDTO testSaveDTO) {
-        log.info("testSaveDTO={}", testSaveDTO);
+       // log.info("testSaveDTO={}", testSaveDTO);
         TestEntity testEntity = TestMapper.INSTANCE.map(testSaveDTO);
         testRepo.save(testEntity);
         return testEntity;

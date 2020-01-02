@@ -9,4 +9,5 @@ jar {
 dependencies {
     compile("com.fasterxml.jackson.core:jackson-annotations:2.9.0")
     compile("org.jooq:jooq-codegen:${jooqVersion}")
+    compile("com.h2database:h2:${h2Version}")
 }
