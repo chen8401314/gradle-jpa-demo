@@ -1,4 +1,6 @@
 rootProject.name = 'gradle-jpa-demo'
 
 include 'application'
+project(':application').projectDir = new File(settingsDir, './application')
 include 'entity'
+project(':entity').projectDir = new File(settingsDir, './entity')

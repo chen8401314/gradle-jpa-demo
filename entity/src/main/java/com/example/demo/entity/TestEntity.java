@@ -34,6 +34,6 @@ public class TestEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private EventStatus eventStatus;
 
-    @Column(name = "isMarry", columnDefinition = "varchar(255) NOT NULL DEFAULT '是' COMMENT '是否结婚'")
+    @Column(name = "is_marry", columnDefinition = "varchar(255) NOT NULL DEFAULT '是' COMMENT '是否结婚'")
     private String isMarry;
 }

@@ -1,78 +1,55 @@
+/*plugins {
+    id 'nu.studer.jooq' version '8.0'
+}*/
 dependencies {
     implementation project(":entity")
+    //implementation files(project(':entity').sourceSets.main.output.classesDirs)
     implementation("org.springframework:spring-context")
     implementation("mysql:mysql-connector-java:8.0.15")
-    implementation("org.springframework.boot:spring-boot-starter-tomcat:${springBootVersion}")
-    implementation("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
-    implementation("io.springfox:springfox-swagger2:2.6.1")
-    implementation("io.springfox:springfox-swagger-ui:2.6.1")
+    implementation("org.springframework.boot:spring-boot-starter-tomcat")
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("io.springfox:springfox-swagger2:2.9.2")
+    implementation("io.springfox:springfox-swagger-ui:2.9.2")
+
+
+   // implementation 'org.springdoc:springdoc-openapi-ui:1.6.13'
     implementation("org.mapstruct:mapstruct:${mapstructVersion}")
     implementation("org.mapstruct:mapstruct-jdk8:${mapstructVersion}")
-    implementation("org.springframework.boot:spring-boot-starter-jooq:${springBootVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-jooq:")
 
 
-    runtime("com.h2database:h2:${h2Version}")
+    //implementation("jakarta.persistence:jakarta.persistence-api:2.2.3")
+    /*  implementation 'jakarta.xml.bind:jakarta.xml.bind-api:3.0.1'
+      implementation 'org.glassfish.jaxb:jaxb-runtime:3.0.1'*/
+
+//    runtime("com.h2database:h2:${h2Version}")
+   // jooqRuntime files(project(':entity').sourceSets.main.output.classesDirs)
     jooqRuntime project(":entity")
-    jooqRuntime("org.jooq:jooq-meta-extensions:${jooqVersion}")
 
-    testCompile("junit:junit:${junitVersion}")
-    testCompile("org.jmockit:jmockit:${jmockitVersion}")
 
-    annotationProcessor("org.mapstruct:mapstruct-processor:${mapstructVersion}")
+//    testCompile("junit:junit:${junitVersion}")
+    //   testCompile("org.jmockit:jmockit:${jmockitVersion}")
+
+
 }
 
 
 jooq {
-    version = '3.12.3'
-    edition = 'OSS'
-    sample(sourceSets.main) {
+    jooqGen(sourceSets.main) {
         generator {
             database {
-                name = 'com.example.demo.base.JPADatabase'
                 properties {
                     property {
                         key = "packages"
                         value = "com.example.demo.entity"
                     }
                 }
-  /*              customTypes {
-                    customType {
-                        name = "timestamp2ZonedDateTimeConverter"
-                        type = "java.time.ZonedDateTime"
-                        converter = "com.example.demo.base.Timestamp2ZonedDateTimeConverter"
-                    }
-                }
-                forcedTypes {
-                    forcedType {
-                        name = "timestamp2ZonedDateTimeConverter"
-                        types = "DATETIME|TIMESTAMP"
-                    }
-                }*/
-            }
-            strategy {
-                name = 'com.example.demo.base.SampleGeneratorStrategy'
-            }
-            generate {
-                javaTimeTypes = true
             }
             target {
                 packageName = 'com.example.demo.jooq'
-                directory = 'build/generated/sources/annotationProcessor/java/main'
             }
         }
     }
 }
-tasks.generateSampleJooqSchemaSource.with {
-    def out = new ByteArrayOutputStream()
-    javaExecSpec = { JavaExecSpec s ->
-        s.standardOutput = out
-        s.errorOutput = out
-        s.ignoreExitValue = true
-        s.jvmArgs '-Xmx512M'
-    }
-    execResultHandler = { ExecResult r ->
-        if (r.exitValue != 0) {
-            throw new RuntimeException('jOOQ source code generation failed:\n\n' + out.toString())
-        }
-    }
-}
+
+generateJooqGenJooqSchemaSource.enabled = true

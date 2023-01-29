@@ -1,37 +1,39 @@
 buildscript {
     ext {
-        springBootVersion = '2.2.2.RELEASE'
-        mapstructVersion = "1.3.0.Beta2"
-        lombokVersion = "1.16.20"
+        springBootVersion = '2.7.7'
+        mapstructVersion = "1.3.1.Final"
+        lombokVersion = "1.18.20"
         junitVersion = "4.12"
         jmockitVersion = "1.20"
-        jooqVersion = "3.12.3"
+        jooqVersion = "3.15.12"
         h2Version = "1.4.200"
+        springVersion= "5.3.20"
     }
     repositories {
+        mavenLocal()
+        maven { url "https://maven.aliyun.com/repository/public" }
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
         mavenCentral()
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("nu.studer:gradle-jooq-plugin:4.0")
+        classpath("nu.studer:gradle-jooq-plugin:4.1")
     }
 }
+/*
 
 plugins {
     id 'java'
     id 'groovy'
-    id 'net.ltgt.apt' version '0.9'
-    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'org.springframework.boot' version '2.7.7'
+    id 'nu.studer.jooq' version '8.0'
 }
+*/
 
-group = 'com.gradle.demo'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
 
 subprojects {
-    apply plugin: 'net.ltgt.apt'
+    //apply plugin: 'net.ltgt.apt'
     apply plugin: 'java'
     apply plugin: 'idea'
     apply plugin: 'eclipse'
@@ -42,8 +44,15 @@ subprojects {
     group = 'com.example'
     version = '0.0.1-SNAPSHOT'
 
+
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+
     repositories {
+        mavenLocal()
         mavenCentral()
+        maven { url "https://maven.aliyun.com/repository/public" }
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
     }
 
     compileJava {
@@ -80,7 +89,7 @@ subprojects {
     sourceSets {
         main {
             java {
-                srcDirs = ["src/main/java", "build/generated/sources/apt/main"]
+                srcDirs = ["src/main/java", "build/generated/sources/annotationProcessor/java/main", "build/generated/jooq"]
             }
             resources {
                 srcDirs = ["src/main/resources"]
@@ -89,10 +98,136 @@ subprojects {
     }
 
     dependencies {
-        compile("org.springframework.boot:spring-boot-starter:${springBootVersion}")
-        compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
+        //implementation "javax.xml.bind:jaxb-api:2.3.0"
+        implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+        implementation("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"){
+            exclude group: 'org.springframework', module: 'spring-aop'
+            exclude group: 'org.springframework', module: 'spring-beans'
+            exclude group: 'org.springframework', module: 'spring-core'
+            exclude group: 'org.springframework', module: 'spring-context'
+            exclude group: 'org.slf4j', module: 'slf4j-api'
+        }
+        implementation "org.springframework:spring-tx:${springVersion}"
+        implementation "org.springframework:spring-orm:${springVersion}"
+        implementation("javax.el:javax.el-api:2.2.4")
+        implementation("org.glassfish.web:javax.el:2.2.4")
         compileOnly("org.projectlombok:lombok:${lombokVersion}")
-        testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+        // testCompile("org.springframework.boot:spring-boot-starter-test")
         annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+
+        implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+        annotationProcessor("org.mapstruct:mapstruct-processor:${mapstructVersion}")
+
+        jooqRuntime 'org.jooq:jooq-meta-extensions-hibernate'
+        // This seemed to fix some errors with this missing, but again open to changing this
+        jooqRuntime 'javax.xml.bind:jaxb-api:2.3.1'
+        jooqRuntime 'jakarta.xml.bind:jakarta.xml.bind-api:3.0.1'
+        jooqRuntime "org.hibernate.common:hibernate-commons-annotations:5.1.2.Final"
+        // jooqGenerator 'org.hibernate:hibernate-jpamodelgen-jakarta:5.6.3.Final'
+        jooqRuntime "com.h2database:h2:${h2Version}"
     }
+
+    jooq {
+        version = "${jooqVersion}"
+/*
+    configurations {
+        main {
+            generationTool {
+                generator {
+                    database {
+                        name = 'com.example.demo.base.JPADatabase'
+                        properties {
+                            property {
+                                key = "packages"
+                                value = "com.example.demo.entity"
+                            }
+                        }
+                        */
+/*              customTypes {
+                            customType {
+                                name = "timestamp2ZonedDateTimeConverter"
+                                type = "java.time.ZonedDateTime"
+                                converter = "com.example.demo.base.Timestamp2ZonedDateTimeConverter"
+                            }
+                        }
+                        forcedTypes {
+                            forcedType {
+                                name = "timestamp2ZonedDateTimeConverter"
+                                types = "DATETIME|TIMESTAMP"
+                            }
+                        }*//*
+
+                    }
+                    strategy {
+                        name = 'com.example.demo.base.SampleGeneratorStrategy'
+                    }
+                    generate {
+                        javaTimeTypes = true
+                    }
+                    target {
+                        packageName = 'com.example.demo.jooq'
+                        directory = "${buildDir}/generated/sources/jooq"
+                    }
+                }
+            }
+        }
+    }
+*/
+
+        jooqGen(sourceSets.main) {
+            generator {
+                database {
+                    name = 'com.example.demo.base.JPADatabase'
+                    /*              customTypes {
+                        customType {
+                            name = "timestamp2ZonedDateTimeConverter"
+                            type = "java.time.ZonedDateTime"
+                            converter = "com.example.demo.base.Timestamp2ZonedDateTimeConverter"
+                        }
+                    }
+                    forcedTypes {
+                        forcedType {
+                            name = "timestamp2ZonedDateTimeConverter"
+                            types = "DATETIME|TIMESTAMP"
+                        }
+                    }*/
+                }
+                strategy {
+                    name = 'com.example.demo.base.SampleGeneratorStrategy'
+                }
+                generate {
+                    javaTimeTypes = true
+                }
+                target {
+                    directory = "${buildDir}/generated/sources/jooq"
+                }
+            }
+        }
+    }
+/*tasks.named('generateJooq').configure {
+    // add additional JVM arguments
+    javaExecSpec = { JavaExecSpec s ->
+        s.standardOutput = out
+        s.errorOutput = out
+        s.ignoreExitValue = true
+        s.jvmArgs '-Xmx512M'
+    }
+}*/
+    generateJooqGenJooqSchemaSource.enabled = false
+    tasks.generateJooqGenJooqSchemaSource.with {
+        def out = new ByteArrayOutputStream()
+        javaExecSpec = { JavaExecSpec s ->
+            s.standardOutput = out
+            s.errorOutput = out
+            s.ignoreExitValue = true
+            s.jvmArgs '-Xmx512M'
+        }
+        execResultHandler = { ExecResult r ->
+            if (r.exitValue != 0) {
+                throw new RuntimeException('jOOQ source code generation failed:\n\n' + out.toString())
+            }
+        }
+    }
+
 }
+

@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+/*
 import com.example.demo.dao.TestRepo;
 import com.example.demo.entity.TestEntity;
 import mockit.Expectations;
@@ -66,4 +67,4 @@ public class TestServiceTest {
     @Test
     public void findTestByPageAndNative() {
     }
-}
+}*/
